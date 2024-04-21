@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-# ComfyUI DPM++ 2M Alt Sampler
+# ComfyUI DPM++ 2M Alt Sampler (Also support WebUI)
 
 the sampler introduced by [hallatore](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/8457)
 

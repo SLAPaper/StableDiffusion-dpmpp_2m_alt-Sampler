@@ -12,20 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import k_diffusion.sampling
 import torch
-from tqdm.auto import trange
 
 
 @torch.no_grad()
 def sample_dpmpp_2m_alt(model, x, sigmas, extra_args=None, callback=None, disable=None):
-    """DPM-Solver++(2M) alt"""
+    """DPM-Solver++(2M) alternative sampler
+    Source: https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/8457
+    """
     extra_args = {} if extra_args is None else extra_args
     s_in = x.new_ones([x.shape[0]])
     sigma_fn = lambda t: t.neg().exp()
     t_fn = lambda sigma: sigma.log().neg()
     old_denoised = None
 
-    for i in trange(len(sigmas) - 1, disable=disable):
+    for i in k_diffusion.sampling.trange(len(sigmas) - 1, disable=disable):
         denoised = model(x, sigmas[i] * s_in, **extra_args)
         if callback is not None:
             callback(
@@ -52,27 +54,37 @@ def sample_dpmpp_2m_alt(model, x, sigmas, extra_args=None, callback=None, disabl
     return x
 
 
-def add_sample_dpmpp_2m_alt_comfy() -> None:
+def add_sample_dpmpp_2m_alt_webui() -> None:
     try:
-        from comfy.samplers import KSampler, k_diffusion_sampling  # type: ignore
+        from modules import sd_samplers, sd_samplers_common, sd_samplers_kdiffusion  # type: ignore
     except ImportError:
         return
 
-    if "dpmpp_2m_alt" not in KSampler.SAMPLERS:
-        try:
-            idx = KSampler.SAMPLERS.index("dpmpp_2m")
-            KSampler.SAMPLERS.insert(idx + 1, "dpmpp_2m_alt")
-            setattr(k_diffusion_sampling, "sample_dpmpp_2m_alt", sample_dpmpp_2m_alt)
-            import importlib
-
-            importlib.reload(k_diffusion_sampling)
-        except ValueError:
-            pass
-
-
-def add_custom_samplers():
-    samplers = [
-        add_sample_dpmpp_2m_alt_comfy,
+    samplers_dpmpp_2m_alt = [
+        (
+            "DPM++ 2M alt",
+            sample_dpmpp_2m_alt,
+            ["k_dpmpp_2m_alt"],
+            {"scheduler": "karras"},
+        )
     ]
-    for add_sampler in samplers:
-        add_sampler()
+    samplers_data_dpmpp_2m_alt = [
+        sd_samplers_common.SamplerData(
+            label,
+            lambda model, funcname=funcname: sd_samplers_kdiffusion.KDiffusionSampler(
+                funcname, model
+            ),
+            aliases,
+            options,
+        )
+        for label, funcname, aliases, options in samplers_dpmpp_2m_alt
+    ]
+
+    sd_samplers.all_samplers.extend(samplers_data_dpmpp_2m_alt)
+    for x in samplers_data_dpmpp_2m_alt:
+        sd_samplers.all_samplers_map[x.name] = x
+
+    sd_samplers.set_samplers()
+
+
+add_sample_dpmpp_2m_alt_webui()

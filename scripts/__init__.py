@@ -55,8 +55,13 @@ def sample_dpmpp_2m_alt(model, x, sigmas, extra_args=None, callback=None, disabl
 
 
 def add_sample_dpmpp_2m_alt_webui() -> None:
+    """Adds DPM-Solver++(2M) alternative sampler to the list of available samplers."""
     try:
-        from modules import sd_samplers, sd_samplers_common, sd_samplers_kdiffusion  # type: ignore
+        from modules import (  # type: ignore
+            sd_samplers,
+            sd_samplers_common,
+            sd_samplers_kdiffusion,
+        )
     except ImportError:
         return
 

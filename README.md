@@ -14,16 +14,16 @@
  limitations under the License.
 -->
 
-# ComfyUI DPM++ 2M Alt Sampler (Also support WebUI)
+# DPM++ 2M Alt Sampler for both ComfyUI and WebUI
 
 Contains the sampler introduced by [hallatore](https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/8457)
 
-Recommended Scheduler: Exponential
-
 Node code extracted from [smZNodes](https://github.com/shiimizu/ComfyUI_smZNodes)
+
+**Recommended Scheduler**: Exponential
 
 ## Bonus: Align Your Steps Scheduler (Only in WebUI for now)
 
 The scheduler introduced by [NVIDIA](https://research.nvidia.com/labs/toronto-ai/AlignYourSteps/howto.html)
 
-Recommended Sampler: DPM++ 2M SDE
+**Recommended Sampler**: DPM++ 2M SDE

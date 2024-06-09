@@ -90,6 +90,10 @@ def add_align_your_step_scheduler() -> None:
     except ImportError:
         return
 
+    # latest dev webui have already added these scheduler: https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/15751
+    if 'align_your_steps' in sd_schedulers.schedulers_map:
+        return
+
     scheduler_v15 = sd_schedulers.Scheduler(
         "ays_v15", "Align Your Step SD15", align_your_step_scheduler_v15
     )

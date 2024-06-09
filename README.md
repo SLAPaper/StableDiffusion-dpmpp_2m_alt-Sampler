@@ -27,3 +27,5 @@ Node code extracted from [smZNodes](https://github.com/shiimizu/ComfyUI_smZNodes
 The scheduler introduced by [NVIDIA](https://research.nvidia.com/labs/toronto-ai/AlignYourSteps/howto.html)
 
 **Recommended Sampler**: DPM++ 2M SDE
+
+Update: latest dev webui have already added these [scheduler](https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/15751)

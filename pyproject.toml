@@ -1,6 +1,6 @@
 [project]
 name = "stablediffusion-dpmpp_2m_alt-sampler"
-description = ""
+description = "DPM++ 2M alt Sampler for ComfyUI (And WebUI) and Align Your Steps Scheduler"
 version = "1.0.0"
 license = "LICENSE"
 
@@ -9,6 +9,6 @@ Repository = "https://github.com/SLAPaper/StableDiffusion-dpmpp_2m_alt-Sampler"
 #  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "slapaper"
 DisplayName = "StableDiffusion-dpmpp_2m_alt-Sampler"
 Icon = ""

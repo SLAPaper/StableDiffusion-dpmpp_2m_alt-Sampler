@@ -65,6 +65,9 @@ def add_sample_dpmpp_2m_alt_webui() -> None:
     except ImportError:
         return
 
+    if "DPM++ 2M alt" in sd_samplers.all_samplers_map:
+        return
+
     samplers_dpmpp_2m_alt = [
         (
             "DPM++ 2M alt",
